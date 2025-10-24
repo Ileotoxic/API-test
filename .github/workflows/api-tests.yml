@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Bạn có thể dùng 18, 20, v.v.
+          node-version: '18' 
 
       # Newman
       # Cài đặt Newman trên máy ảo
