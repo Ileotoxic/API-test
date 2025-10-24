@@ -1,6 +1,5 @@
 ﻿name: API CI Tests
 
-# Chạy workflow này mỗi khi push hoặc tạo Pull Request
 on:
   push:
     branches: [ main ]
@@ -9,29 +8,26 @@ on:
 
 jobs:
   api-testing:
-    # Sử dụng máy ảo Ubuntu mới nhất
+    # chay ubuntu
     runs-on: ubuntu-latest
 
     steps:
       # 1. Checkout code
-      # Lấy code từ repo của bạn (bao gồm cả file collection.json)
+      # Lấy code từ repo
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Cài đặt Node.js
-      # Newman là một công cụ Node.js, vì vậy chúng ta cần Node
+      # set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18' # Bạn có thể dùng 18, 20, v.v.
 
-      # 3. Cài đặt Newman
+      # Newman
       # Cài đặt Newman trên máy ảo
       - name: Install Newman
         run: npm install -g newman
 
-      # 4. Chạy Postman tests
-      # Đây là lệnh quan trọng nhất: chạy Newman với file collection
-      # Đường dẫn phải khớp với cấu trúc thư mục của bạn
+      #  Chạy Postman tests
       - name: Run API Tests with Newman
         run: newman run postman/API-Testing-Demo.postman_collection.json
