@@ -1,0 +1,214 @@
+﻿{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6",
+    "name": "API Testing Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET Single Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test 1: Status code is 200",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "// Test 2: Response time is less than 500ms",
+              "pm.test(\"Response time is less than 500ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);",
+              "});",
+              "",
+              "// Test 3: Body matches structure (has userId and id)",
+              "pm.test(\"Body matches structure\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('userId');",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "});",
+              "",
+              "// Test 4: Correct ID is returned",
+              "pm.test(\"Body has correct ID 1\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.eql(1);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/1",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET All Posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test 5: Status code is 200",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "// Test 6: Response is an array of 100 items",
+              "pm.test(\"Response is an array of 100 items\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.eql(100);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CREATE New Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test 7: Status code is 201 (Created)",
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "// Test 8: Response body includes the new ID (101 for this demo API)",
+              "pm.test(\"Response body includes new ID\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.eql(101);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-type",
+            "value": "application/json; charset=UTF-8",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"foo\",\n    \"body\": \"bar\",\n    \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UPDATE Post 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Test 9: Status code is 200",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "// Test 10: Response body includes the updated title",
+              "pm.test(\"Response body shows updated title\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.title).to.eql(\"foo_updated\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-type",
+            "value": "application/json; charset=UTF-8",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": 1,\n    \"title\": \"foo_updated\",\n    \"body\": \"bar_updated\",\n    \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/posts/1",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
